@@ -1,0 +1,5 @@
+package com.cibertec.sjl.modelo;
+
+public class Medico {
+
+}

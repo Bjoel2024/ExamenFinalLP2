@@ -1,0 +1,27 @@
+package com.cibertec.sjl.controlador;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.cibertec.sjl.modelo.Medico;
+import com.cibertec.sjl.servicio.IMedicoServicio;
+
+@Controller
+@RequestMapping("/Vistas")
+public class MedicoController {
+
+	
+	@Autowired
+	private IMedicoServicio iMedSer;
+	
+	@GetMapping("ListadoMedicos")
+	public String ListadoProducto(Model modelo) {
+		List<Medico>listado=iMedSer.lis
+	}
+	
+}

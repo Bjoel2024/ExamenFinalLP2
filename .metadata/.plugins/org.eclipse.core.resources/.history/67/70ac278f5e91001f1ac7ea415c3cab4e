@@ -1,0 +1,5 @@
+package com.cibertec.sjl.repositorio;
+
+public interface IMedicoRepositorio {
+
+}

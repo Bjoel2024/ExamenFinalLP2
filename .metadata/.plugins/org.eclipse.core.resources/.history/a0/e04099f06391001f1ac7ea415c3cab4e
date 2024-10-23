@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	
+<head>
+	
+	<title>Listado de Medicos</title>
+	<style>
+		html{
+			background-color: #c5dec9;
+		}
+	</style>
+	
+</head>
+
+
+
+</html>

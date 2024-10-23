@@ -1,0 +1,81 @@
+package com.bd.mysql.controlador;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.bd.mysql.modelo.ClassProducto;
+import com.bd.mysql.servicio.IProductoServicio;
+
+@Controller
+@RequestMapping("/Vistas")
+public class ProductoController {
+//inyeccion de dependencia..
+	@Autowired
+	private IProductoServicio iproductoservicio;
+	
+	//creamos el metodo listado
+	@GetMapping("ListadoProductos")
+	public String ListadoProducto(Model modelo) {
+		//recuperamos el listado de productos...
+		List<ClassProducto> listado=iproductoservicio.ListadoProductos();
+		//enviamos la data hacia la vista
+		modelo.addAttribute("listado",listado);
+		//retornamos
+		return "/Vistas/ListadoProductos";
+	}  //fin del metodo listdo
+	
+	//creamos el metodo registrar producto
+	@GetMapping("/RegistrarProducto")
+	public String RegistrarProducto(Model modelo) {
+		//realizamos la respectiva instancia..
+		ClassProducto clproducto=new ClassProducto();
+		//enviamos a la vista
+		modelo.addAttribute("regproducto",clproducto);
+		//retornamos
+		return "/Vistas/FrmRegProducto";
+		
+	}//fin del metodo registrar..
+	//realizamos el metodo  guardar
+	//con postmapping..
+	@PostMapping("/GuardarProducto")
+	public String GuardarProducto(@ModelAttribute
+			ClassProducto clprod,
+			Model modelo) {
+		iproductoservicio.RegistrarProducto(clprod);
+		//emitimo un mensaje por consola
+		System.out.println("dato registrado en bd");
+		//retornamos al listado
+	return "redirect:/Vistas/ListadoProductos";
+	} //fin del metodo guardar..
+	
+	//creamos el metodo editar...
+	@GetMapping("/editarproducto/{id}")
+	public String Editar(@PathVariable("id") 
+	Integer idproducto,Model modelo) {
+		ClassProducto clproducto=iproductoservicio.BuscarporId(idproducto);
+		//enviamos hacia la vista..
+		modelo.addAttribute("regproducto",clproducto);
+		//retornamos el frmregproducto..
+		return "/Vistas/FrmRegProducto";
+	}//fin del metodo editar..
+	//creamos el metodo eliminar..
+	public String eliminar(@PathVariable("id") Integer idproducto,
+			Model modelo) {
+		//invocamos al metodo
+		iproductoservicio.EliminarProducto(idproducto);
+		//actualizamos el listado
+		List<ClassProducto> listado=iproductoservicio.ListadoProductos();
+		//enviamos a la vista
+		modelo.addAttribute("listado",listado);
+		//redireccionamos
+		return "redirect:/Vistas/ListadoProductos";
+	} //fin del metodo eliminar...
+}//fin de producto controller
